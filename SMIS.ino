@@ -14,12 +14,10 @@ char auth[] = "TH0herQH8VrsQmkL8uVsocmb_xWNPdzQ";
 char ssid[] = "6";
 char pass[] = "passwordlega";
 
-#define DHTPIN 2          // What digital pin we're connected to
+#define DHTPIN 2          // What digital pin we're connected to or D4 on NodeMCU
 
-// Uncomment whatever type you're using!
+
 #define DHTTYPE DHT11     // DHT 11
-//#define DHTTYPE DHT22   // DHT 22, AM2302, AM2321
-//#define DHTTYPE DHT21   // DHT 21, AM2301
 
 DHT dht(DHTPIN, DHTTYPE);
 BlynkTimer timer;
@@ -89,13 +87,13 @@ void gas() {
   float* values = mq2.read(true); //set it false if you don't want to print the values in the Serial
 
   //lpg = values[0];
-  lpg = (mq2.readLPG()-2147483648.00)/1000000;
+  lpg = mq2.readLPG();
   Blynk.virtualWrite(1, lpg);
   //co = values[1];
-  co = (mq2.readCO()-2147483648.00)/1000000;
+  co = mq2.readCO();
   Blynk.virtualWrite(2, co);
   //smoke = values[2];
-  smoke = (mq2.readSmoke()-2147483648.00)/1000000;
+  smoke = mq2.readSmoke();
   Blynk.virtualWrite(3, smoke);
 }
 
